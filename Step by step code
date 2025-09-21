@@ -1,0 +1,101 @@
+1. Basic HTML + A-Frame Setup
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Load A-Frame library (must be in <head>) -->
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <!-- A-Frame Scene is like a stage where all 3D objects live -->
+    <a-scene>
+      <!-- Camera + Cursor (so we can “click” on objects by looking/tapping) -->
+      <a-entity camera look-controls>
+        <!-- Cursor is a dot in center (helps with clicking in VR/mobile) -->
+        <a-cursor color="yellow"></a-cursor>
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
+📝 Notes:
+a-scene is your playground.
+camera lets you look around.
+cursor lets you interact (click).
+
+2. Add a Floor + Background
+<a-scene>
+  <!-- Sky (blue background) -->
+  <a-sky color="#DFF6FF"></a-sky>
+  <!-- Floor (wood texture plane) -->
+  <a-plane color="#8B5A2B" rotation="-90 0 0" width="20" height="20"></a-plane>
+</a-scene>
+📝 Notes:
+Sky is like painting the background.
+Plane rotated -90 is flat ground.
+
+3. Add Question Text
+<!-- Question floating in the air -->
+<a-text 
+  value="Which tool is used for hammering nails?" 
+  color="black" 
+  position="-2 2 -3" 
+  width="5">
+</a-text>
+📝 Notes:
+position="x y z" → where text appears.
+-3 in Z means it’s 3 meters in front of the camera.
+
+4. Add Tool Models (Simple Shapes as Placeholders)
+<!-- Hammer (a box for now) -->
+<a-box id="hammer" color="gray" position="-2 1.5 -4"></a-box>
+<!-- Saw (a cylinder placeholder) -->
+<a-cylinder id="saw" color="red" position="0 1.5 -4" radius="0.3" height="1"></a-cylinder>
+<!-- Drill (a sphere placeholder) -->
+<a-sphere id="drill" color="blue" position="2 1.5 -4" radius="0.5"></a-sphere>
+📝 Notes:
+We’re using basic A-Frame shapes first. Later, replace with real 3D models (.glb or .gltf).
+Each tool has an id (important for interactivity).
+
+5. Add Feedback Text (Initially Hidden)
+<a-text 
+  id="feedback" 
+  value="" 
+  color="green" 
+  position="-1.5 0.5 -3" 
+  width="4">
+</a-text>
+📝 Notes:
+This text will change dynamically when students answer.
+
+6. Add Interactivity with JavaScript
+<script>
+  // Wait until page loads
+  document.addEventListener("DOMContentLoaded", () => {
+    // Grab objects
+    const hammer = document.querySelector("#hammer");
+    const saw = document.querySelector("#saw");
+    const drill = document.querySelector("#drill");
+    const feedback = document.querySelector("#feedback");
+
+    // Correct Answer → Hammer
+    hammer.addEventListener("click", () => {
+      feedback.setAttribute("value", "✅ Correct! Hammer is for nails.");
+      feedback.setAttribute("color", "green");
+    });
+
+    // Wrong Answer → Saw
+    saw.addEventListener("click", () => {
+      feedback.setAttribute("value", "❌ Try Again! Saw is for cutting.");
+      feedback.setAttribute("color", "red");
+    });
+
+    // Wrong Answer → Drill
+    drill.addEventListener("click", () => {
+      feedback.setAttribute("value", "❌ Try Again! Drill is for making holes.");
+      feedback.setAttribute("color", "red");
+    });
+  });
+</script>
+📝 Notes:
+Each tool listens for a “click.”
+Feedback text updates instantly.
+You can expand with multiple questions later.
