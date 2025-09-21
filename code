@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Load A-Frame library (must be in <head>) -->
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <!-- A-Frame Scene is like a stage where all 3D objects live -->
+    <a-scene>
+      <!-- Camera + Cursor (so we can “click” on objects by looking/tapping) -->
+      <a-entity camera look-controls>
+        <!-- Cursor is a dot in center (helps with clicking in VR/mobile) -->
+        <a-cursor color="yellow"></a-cursor>
+      </a-entity>
+  <!-- Sky (blue background) -->
+  <a-sky color="#DFF6FF"></a-sky>
+
+  <!-- Floor (wood texture plane) -->
+  <a-plane color="#8B5A2B" rotation="-90 0 0" width="20" height="20"></a-plane>
+  <!-- Question floating in the air -->
+<a-text 
+  value="Which tool is used for hammering nails?" 
+  color="black" 
+  position="-2 2 -3" 
+  width="5">
+</a-text>
+<!-- Hammer (a box for now) -->
+<a-box id="hammer" color="gray" position="-2 1.5 -4"></a-box>
+<a-text value="Hammer (Box)" color="black" position="-2 0.7 -4" align="center" width="3"></a-text>
+
+<!-- Saw (a cylinder placeholder) -->
+<a-cylinder id="saw" color="red" position="0 1.5 -4" radius="0.3" height="1"></a-cylinder>
+<a-text value="Saw (Cylinder)" color="black" position="0 0.7 -4" align="center" width="3"></a-text>
+
+<!-- Drill (a sphere placeholder) -->
+<a-sphere id="drill" color="blue" position="2 1.5 -4" radius="0.5"></a-sphere>
+<a-text value="Drill (Sphere)" color="black" position="2 0.7 -4" align="center" width="3"></a-text>
+
+<a-text 
+  id="feedback" 
+  value="" 
+  color="green" 
+  position="-1.5 -0.5 -3" 
+  width="4">
+</a-text>
+
+
+
+    </a-scene>
+     <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const hammer = document.querySelector("#hammer");
+        const saw = document.querySelector("#saw");
+        const drill = document.querySelector("#drill");
+        const feedback = document.querySelector("#feedback");
+
+        hammer.addEventListener("click", () => {
+          feedback.setAttribute("value", "✅ Correct! Hammer is for nails.");
+          feedback.setAttribute("color", "green");
+        });
+
+        saw.addEventListener("click", () => {
+          feedback.setAttribute("value", "❌ Try Again! Saw is for cutting.");
+          feedback.setAttribute("color", "red");
+        });
+
+        drill.addEventListener("click", () => {
+          feedback.setAttribute("value", "❌ Try Again! Drill is for making holes.");
+          feedback.setAttribute("color", "red");
+        });
+      });
+    </script>
+  </body>
+</html>
